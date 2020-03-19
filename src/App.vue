@@ -75,7 +75,7 @@
     </template>
   </v-simple-table>
    <v-btn x-large color="success" dark @click="sumar">Sumar</v-btn>
-   {{total}}
+   {{sumar}}
 
  
  
@@ -117,9 +117,7 @@ export default {
         var nuev_prod= this.lista.push({producto: this.producto,precio:this.precio})
         this.precio=""
         this.producto=""
-        this.total='0'
-        this.total= this.total + this.precio
-        return this.total 
+       
       
       }
       else{
@@ -128,13 +126,17 @@ export default {
 
     
     },
-     sumar:function(){
-          this.total="0"
-        
-           for(item of this.precio){
+      computed:{
+        sumar(){
+            this.total=0;
+            for(item of this.lista){
                 this.total = this.total + item.precio
             }
-            return this.total + this.precio
+            return this.total;
+
+        }
+
+    }
 
         
           
