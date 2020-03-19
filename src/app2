@@ -1,0 +1,95 @@
+<template>
+  <v-app>
+    <v-container>
+      <v-layaout row wrap>
+        <v-row no-gutters>
+          <v-col cols="10" md="6">
+            <!--titulo-->
+            <v-flex md10>
+              <v-card class="mb-5 pa-2">
+                <v-card-text class="title">
+                  <h2 class="red lighten-3 text-center">Agrege un Producto</h2>
+                </v-card-text>
+                <v-flex md6>
+                  <h2>Producto</h2>
+                  <v-text-field placeholder="Producto" v-model="producto"></v-text-field>
+
+                  <h2>Precio</h2>
+                  <v-text-field type="number" placeholder="Precio" v-model="precio"></v-text-field>
+                </v-flex>
+
+                <div class="my-2">
+                  <v-btn x-large color="success" dark @click="agregar">Agregar</v-btn>
+                </div>
+              </v-card>
+            </v-flex>
+          </v-col>
+          <v-col cols="10" md="6">
+            <v-flex md10>
+              <v-card class="mb-3 pa-2">
+                <v-card-text class="title">
+                  <h2 class="red lighten-3 text-center">Productos agregados</h2>
+                </v-card-text>
+                <v-simple-table>
+                  <template v-slot:default>
+                    <thead>
+                      <tr>
+                        <th class="text-left">Producto</th>
+                        <th class="text-left">Precio</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="item in lista" :key="item.producto">
+                        <td>{{ item.producto }}</td>
+                        <td>{{ item.precio }}</td>
+                      </tr>
+                    </tbody>
+                  </template>
+                </v-simple-table>
+                <v-btn x-large color="success" dark @click="sumar">Sumar</v-btn>
+                {{ total }}
+              </v-card>
+            </v-flex>
+          </v-col>
+        </v-row>
+      </v-layaout>
+    </v-container>
+  </v-app>
+</template>
+
+<script>
+
+export default {
+  name: 'App',
+  data() {
+    return {
+      lista: [],
+      precio: null,
+      producto: null,
+      total: 0,
+
+    };
+  },
+  methods: {
+    agregar() {
+      if (this.producto !== null && this.precio !== null) {
+        // eslint-disable-next-line no-unused-vars
+        this.lista.push({ producto: this.producto, precio: this.precio });
+        this.precio = null;
+        this.producto = null;
+      } else {
+        // eslint-disable-next-line no-alert
+        alert('Ingrese Un producto');
+      }
+    },
+    sumar() {
+      this.total = 0;
+      // eslint-disable-next-line no-plusplus
+      for (let index = 0; index < this.lista.length; index++) {
+        this.total += parseFloat(this.lista[index].precio);
+      }
+    },
+  },
+
+};
+</script>
